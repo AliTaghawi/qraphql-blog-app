@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 
-const GET_POSTS = gql`
+const GET_POSTS_INFO = gql`
   query {
     posts {
       author {
@@ -19,4 +19,17 @@ const GET_POSTS = gql`
   }
 `
 
-export { GET_POSTS, }
+const GET_AUTHORS_INFO = gql`
+  query {
+    authors {
+      id
+      name
+      slug
+      avatar {
+        url
+      }
+    }
+  }
+`
+
+export { GET_POSTS_INFO, GET_AUTHORS_INFO, }

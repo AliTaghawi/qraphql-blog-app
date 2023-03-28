@@ -5,7 +5,7 @@ import Blogs from "./Blogs";
 
 const HomePage = () => {
   return (
-    <Grid container mt={3} padding={3}>
+    <Grid container spacing={2} mt={3} padding={3}>
       <Grid item xs={12} md={3} mt={4}>
         <Authors />
       </Grid>

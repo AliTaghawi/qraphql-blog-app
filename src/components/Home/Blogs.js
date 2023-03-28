@@ -2,7 +2,7 @@ import React from "react";
 
 //graphql
 import { useQuery } from "@apollo/client";
-import { GET_POSTS } from "../../graphql/queries";
+import { GET_POSTS_INFO } from "../../graphql/queries";
 
 //MUI
 import { Grid } from "@mui/material";
@@ -11,7 +11,7 @@ import { Grid } from "@mui/material";
 import CardEL from "../common/CardEL";
 
 const Blogs = () => {
-  const { loading, data, error } = useQuery(GET_POSTS);
+  const { loading, data, error } = useQuery(GET_POSTS_INFO);
 
   if (loading) return <h2>Loading ...</h2>;
 

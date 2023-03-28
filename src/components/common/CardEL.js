@@ -16,7 +16,7 @@ import {
 const CardEL = ({ author, coverImage, id, slug, title }) => {
   // console.log({author,coverImage, id, slug, title})
   return (
-    <Card sx={{boxShadow: 'rgba(0,0,0,.2) 0px 5px 10px'}}>
+    <Card sx={{boxShadow: 'rgba(0,0,0,.1) 0px 4px 12px', borderRadius: 4}}>
       <CardHeader
         avatar={<Avatar alt={author.name} src={author.avatar.url} />}
         title={
