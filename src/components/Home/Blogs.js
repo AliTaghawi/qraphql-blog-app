@@ -9,11 +9,12 @@ import { Grid } from "@mui/material";
 
 //components
 import CardEL from "../common/CardEL";
+import Loader from "../common/Loader";
 
 const Blogs = () => {
   const { loading, data, error } = useQuery(GET_POSTS_INFO);
 
-  if (loading) return <h2>Loading ...</h2>;
+  if (loading) return <Loader />;
 
   if (error) return <h2>error ...</h2>;
 

@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 import { GET_AUTHOR_INFO } from "../../graphql/queries";
 import { Avatar, Grid, Typography } from "@mui/material";
 import CardEL from "../common/CardEL";
+import Loader from "../common/Loader";
 
 const AuthorPage = () => {
   const params = useParams();
@@ -15,7 +16,7 @@ const AuthorPage = () => {
     variables: { slug },
   });
 
-  if (loading) return <h2>Loading...</h2>;
+  if (loading) return <div style={{marginTop: '80px'}}><Loader /></div>;
 
   if (error) return <h2>error...</h2>;
 
