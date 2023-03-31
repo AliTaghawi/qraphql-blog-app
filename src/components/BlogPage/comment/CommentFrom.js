@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
@@ -35,10 +34,8 @@ const validationSchema = Yup.object({
   text: Yup.string().required("ضروری!"),
 });
 
-const CommentFrom = () => {
+const CommentFrom = ({slug}) => {
   const [isSented, setIsSented] = useState(false);
-  const { slug } = useParams();
-
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -76,8 +73,6 @@ const CommentFrom = () => {
     });
     setIsSented(false);
   }
-
-  console.log("2", { loading, data, error });
 
   return (
     <form onSubmit={formik.handleSubmit} style={{ width: "100%" }}>

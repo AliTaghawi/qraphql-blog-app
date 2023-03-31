@@ -13,6 +13,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 //components
 import Loader from "../common/Loader";
 import CommentFrom from "./comment/CommentFrom";
+import CommentsBox from "./comment/CommentsBox";
 
 const BlogPage = () => {
   const { slug } = useParams();
@@ -35,7 +36,6 @@ const BlogPage = () => {
   const {
     post: { title, coverImage, content, author },
   } = data;
-  console.log(data);
   return (
     <Grid container mt={8}>
       <Grid
@@ -69,7 +69,10 @@ const BlogPage = () => {
         <div dangerouslySetInnerHTML={{__html: sanitizeHtml(content.html) }}></div>
       </Grid> 
       <Grid item xs={12} mt={7}>
-        <CommentFrom />
+        <CommentFrom slug={slug} />
+      </Grid>
+      <Grid item xs={12} mt={7}>
+        <CommentsBox slug={slug} />
       </Grid>
     </Grid>
   );
