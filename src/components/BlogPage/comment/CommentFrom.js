@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+//graphql
+import { useMutation } from "@apollo/client";
+import { SEND_NEW_COMMENT_INFO } from "../../../graphql/mutations";
 
 //MUI
 import { Button, Grid, TextField, Typography } from "@mui/material";
@@ -22,11 +29,6 @@ const initialValues = {
   text: "",
 };
 
-const onSubmit = (values, { resetForm }) => {
-  console.log(values)
-  resetForm();
-};
-
 const validationSchema = Yup.object({
   name: Yup.string().required("ضروری!"),
   email: Yup.string().email("ایمیل نامعتبر است!").required("ضروری!"),
@@ -34,11 +36,48 @@ const validationSchema = Yup.object({
 });
 
 const CommentFrom = () => {
+  const [isSented, setIsSented] = useState(false);
+  const { slug } = useParams();
+
   const formik = useFormik({
     initialValues,
     onSubmit,
     validationSchema,
   });
+
+  const [createComment, { loading, data, error }] = useMutation(
+    SEND_NEW_COMMENT_INFO,
+    {
+      variables: {
+        name: formik.values.name,
+        email: formik.values.email,
+        text: formik.values.text,
+        slug: slug,
+      },
+    }
+  );
+
+  function onSubmit(values, { resetForm }) {
+    createComment();
+    setIsSented(true);
+    resetForm();
+  }
+
+  if (data && isSented) {
+    toast.success("کامنت شما با موفقیت ارسال شد", {
+      position: "top-center",
+      autoClose: 2000,
+    });
+    setIsSented(false);
+  } else if (error && isSented) {
+    toast.error("ارسال با مشکل روبه‌رو شد لطفا مجدداً تلاش کنید", {
+      position: "top-center",
+      autoClose: 2000,
+    });
+    setIsSented(false);
+  }
+
+  console.log("2", { loading, data, error });
 
   return (
     <form onSubmit={formik.handleSubmit} style={{ width: "100%" }}>
@@ -70,7 +109,7 @@ const CommentFrom = () => {
             <TextField
               label="ایمیل"
               name="email"
-              type='email'
+              type="email"
               fullWidth
               value={formik.values.email}
               onChange={formik.handleChange}
@@ -96,10 +135,19 @@ const CommentFrom = () => {
             />
           </Grid>
           <Grid item xs={12} m={2}>
-            <Button type="submit" variant="contained">ارسال</Button>
+            {loading ? (
+              <Button variant="contained" disabled>
+                در حال ارسال
+              </Button>
+            ) : (
+              <Button type="submit" variant="contained">
+                ارسال
+              </Button>
+            )}
           </Grid>
         </CacheProvider>
       </Grid>
+      <ToastContainer />
     </form>
   );
 };
